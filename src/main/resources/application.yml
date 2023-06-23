@@ -1,0 +1,15 @@
+service:
+  upbit:
+    enabled: true
+    ticket:
+      ws: wss://api.upbit.com/websocket/v1
+      symbol: KRW-BTC
+  bybit:
+    enabled: true
+    ticket:
+      ws: wss://stream.bybit.com/v5/public/spot
+      symbol: DOGEUSDT
+
+logging:
+  level:
+    io.cross.exchange: DEBUG
