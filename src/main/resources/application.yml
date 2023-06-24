@@ -1,14 +1,26 @@
 service:
+  symbols: KRW-BTC
   upbit:
     enabled: true
     ticket:
       ws: wss://api.upbit.com/websocket/v1
-      symbol: KRW-BTC
   bybit:
-    enabled: true
+    enabled: false
     ticket:
       ws: wss://stream.bybit.com/v5/public/spot
-      symbol: DOGEUSDT
+
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 logging:
   level:
