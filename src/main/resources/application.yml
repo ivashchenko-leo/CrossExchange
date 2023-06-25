@@ -1,11 +1,13 @@
 service:
-  symbols: KRW-BTC
+  symbols: USDT-BTC
   upbit:
     enabled: true
     ticket:
       ws: wss://api.upbit.com/websocket/v1
   bybit:
-    enabled: false
+    enabled: true
+    map:
+      USDT-BTC: BTCUSDT
     ticket:
       ws: wss://stream.bybit.com/v5/public/spot
 
