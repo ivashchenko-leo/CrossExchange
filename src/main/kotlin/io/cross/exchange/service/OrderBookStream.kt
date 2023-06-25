@@ -13,15 +13,11 @@ class OrderBookStream(
     @Value("#{'\${service.symbols}'.split(',')}") symbols: List<String>
 ) {
 
-    private val sinkMap: MutableMap<String, Sinks.Many<OrderBookL1>> = ConcurrentHashMap()
+    private val sinkMap: Map<String, Sinks.Many<OrderBookL1>> = ConcurrentHashMap(
+            symbols.map { it.trim() }.associateWith { Sinks.many().multicast().directBestEffort() }
+    )
 
     private val defaultSink: Sinks.Many<OrderBookL1> = Sinks.many().multicast().directBestEffort()
-
-    init {
-        symbols.forEach {
-            sinkMap[it.trim()] = Sinks.many().multicast().directBestEffort()
-        }
-    }
 
     fun flux(symbol: String): Flux<OrderBookL1> = sinkMap.getOrDefault(symbol, defaultSink).asFlux()
 
