@@ -11,17 +11,21 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.client.WebSocketClient;
+import reactor.core.publisher.Sinks
 import java.math.BigDecimal
 
 import java.net.URI;
+import java.time.Duration
 import java.util.UUID;
+import java.util.concurrent.TimeUnit
 
 @Component
 @ConditionalOnProperty("service.bybit.enabled")
 class BybitWebSocket(
-        @Value("\${service.bybit.ticket.ws}") url: String,
+        @Value("\${service.bybit.order-book.ws}") url: String,
         @Value("#{'\${service.symbols}'.split(',')}") private val symbols: List<String>,
         webSocketClient: WebSocketClient,
         objectMapper: ObjectMapper,
@@ -38,6 +42,16 @@ class BybitWebSocket(
     @PostConstruct
     fun init() {
         subscribe()
+    }
+
+    @Scheduled(initialDelay = 30, timeUnit = TimeUnit.SECONDS, fixedDelay = 30)
+    fun ping() {
+        val uuid = UUID.randomUUID().toString()
+        val message = "{\"req_id\":\"$uuid\",\"op\":\"ping\"}"
+
+        log.warn(message)
+        
+        outbound.emitNext(message, Sinks.EmitFailureHandler.busyLooping(Duration.ofSeconds(1)))
     }
 
     override fun initMessage(): String {

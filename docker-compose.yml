@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  springboot-app:
+    image: openjdk:17
+    volumes:
+      - ./build/libs/CrossExchange-0.0.1-SNAPSHOT.jar:/app.jar
+    command: ["java", "-jar", "/app.jar"]
+    ports:
+      - 8080
+    networks:
+      - monitoring-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090
+    networks:
+      - monitoring-network
+    depends_on:
+      - springboot-app
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - ./configs/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring-network
+    depends_on:
+      - prometheus
+
+networks:
+  monitoring-network:

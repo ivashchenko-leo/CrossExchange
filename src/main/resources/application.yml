@@ -2,13 +2,14 @@ service:
   symbols: USDT-BTC
   upbit:
     enabled: true
-    ticket:
+    order-book:
       ws: wss://api.upbit.com/websocket/v1
   bybit:
     enabled: true
     map:
       USDT-BTC: BTCUSDT
-    ticket:
+    order-book:
+      ping-interval: 30
       ws: wss://stream.bybit.com/v5/public/spot
 
 management:
@@ -26,4 +27,4 @@ management:
 
 logging:
   level:
-    io.cross.exchange: DEBUG
+    io.cross.exchange: INFO

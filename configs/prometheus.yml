@@ -1,0 +1,6 @@
+scrape_configs:
+  - job_name: 'springboot-app'
+    scrape_interval: 5s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['springboot-app:8080']

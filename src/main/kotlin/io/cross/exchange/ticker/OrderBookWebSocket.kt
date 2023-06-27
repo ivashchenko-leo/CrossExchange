@@ -9,16 +9,19 @@ import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketSession
 import org.springframework.web.reactive.socket.client.WebSocketClient
 import reactor.core.publisher.Mono
+import reactor.core.publisher.Sinks
 import java.net.URI
 
 abstract class OrderBookWebSocket(
     protected val url: URI,
     webSocketClient: WebSocketClient,
     protected val objectMapper: ObjectMapper,
-    private val tickerStream: OrderBookStream
+    private val orderBookStream: OrderBookStream
 ) {
 
     private val wsStream = webSocketClient.execute(url) { this.parse(it) }
+
+    protected val outbound: Sinks.Many<String> = Sinks.many().unicast().onBackpressureBuffer()
 
     private fun parse(session: WebSocketSession): Mono<Void> {
         val receiveStream = session.receive()
@@ -28,8 +31,12 @@ abstract class OrderBookWebSocket(
                     log.trace(payload)
                     this.parse(objectMapper.readTree(payload))
                 }
-                .doOnNext { tickerStream.publish(it!!) }
+                .doOnNext { orderBookStream.publish(it!!) }
                 .then()
+
+        session
+                .send(outbound.asFlux().map { session.textMessage(it) })
+                .subscribe()
 
         val initMessage = initMessage()
         if (initMessage.isNotEmpty())
@@ -43,9 +50,9 @@ abstract class OrderBookWebSocket(
     protected abstract fun parse(message: JsonNode): OrderBookL1?
 
     protected fun subscribe() {
-        log.info("Subscribed to {}", url);
+        log.info("Subscribed to {}", url)
         //disposable
-        wsStream.subscribe();
+        wsStream.subscribe()
     }
 
     companion object {

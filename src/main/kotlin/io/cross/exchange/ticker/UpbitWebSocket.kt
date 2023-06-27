@@ -18,7 +18,7 @@ import java.util.UUID;
 @Component
 @ConditionalOnProperty("service.upbit.enabled")
 class UpbitWebSocket(
-        @Value("\${service.upbit.ticket.ws}") url: String,
+        @Value("\${service.upbit.order-book.ws}") url: String,
         @Value("#{'\${service.symbols}'.split(',')}") private val symbols: List<String>,
         webSocketClient: WebSocketClient,
         objectMapper: ObjectMapper,
