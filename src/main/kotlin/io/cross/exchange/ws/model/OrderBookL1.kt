@@ -1,4 +1,4 @@
-package io.cross.exchange.ticker.model
+package io.cross.exchange.ws.model
 
 import io.cross.exchange.enums.ExchangeName
 import java.math.BigDecimal

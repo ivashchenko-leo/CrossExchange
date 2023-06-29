@@ -1,3 +1,7 @@
+spring:
+  application:
+    name: cross-exchange-bot
+
 service:
   symbols: USDT-BTC
   upbit:
@@ -13,6 +17,9 @@ service:
       ws: wss://stream.bybit.com/v5/public/spot
 
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
   endpoint:
     prometheus:
       enabled: true

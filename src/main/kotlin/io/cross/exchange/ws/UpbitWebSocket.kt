@@ -1,10 +1,10 @@
-package io.cross.exchange.ticker;
+package io.cross.exchange.ws;
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.cross.exchange.enums.ExchangeName
 import io.cross.exchange.service.OrderBookStream
-import io.cross.exchange.ticker.model.OrderBookL1
+import io.cross.exchange.ws.model.OrderBookL1
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

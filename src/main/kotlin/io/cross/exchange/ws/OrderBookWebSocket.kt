@@ -1,9 +1,9 @@
-package io.cross.exchange.ticker;
+package io.cross.exchange.ws;
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.cross.exchange.service.OrderBookStream
-import io.cross.exchange.ticker.model.OrderBookL1
+import io.cross.exchange.ws.model.OrderBookL1
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketSession

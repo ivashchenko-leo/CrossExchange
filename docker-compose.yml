@@ -28,6 +28,11 @@ services:
     image: grafana/grafana:latest
     volumes:
       - ./configs/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./configs/dashboards:/var/lib/grafana/dashboards/default
+      - ./configs/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-r0ze}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-lnk_92}
     ports:
       - "3000:3000"
     networks:

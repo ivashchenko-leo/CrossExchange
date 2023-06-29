@@ -1,11 +1,11 @@
-package io.cross.exchange.ticker;
+package io.cross.exchange.ws;
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.cross.exchange.config.BybitProperties
 import io.cross.exchange.enums.ExchangeName
 import io.cross.exchange.service.OrderBookStream
-import io.cross.exchange.ticker.model.OrderBookL1
+import io.cross.exchange.ws.model.OrderBookL1
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ class BybitWebSocket(
         val uuid = UUID.randomUUID().toString()
         val message = "{\"req_id\":\"$uuid\",\"op\":\"ping\"}"
 
-        log.warn(message)
+        log.debug(message)
         
         outbound.emitNext(message, Sinks.EmitFailureHandler.busyLooping(Duration.ofSeconds(1)))
     }

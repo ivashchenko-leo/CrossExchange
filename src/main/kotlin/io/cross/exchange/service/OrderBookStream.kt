@@ -1,6 +1,6 @@
 package io.cross.exchange.service
 
-import io.cross.exchange.ticker.model.OrderBookL1
+import io.cross.exchange.ws.model.OrderBookL1
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
