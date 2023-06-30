@@ -80,7 +80,9 @@ class BybitWebSocket(
                     lowestAsk
             )
         } else {
-            log.warn("{}", message)
+            if (!(message.has("op") && message["op"].asText() == "ping"))
+                log.warn("{}", message)
+
             null
         }
     }

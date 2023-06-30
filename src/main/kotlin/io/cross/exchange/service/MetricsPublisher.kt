@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference
 class MetricsPublisher(
         private val orderBookStream: OrderBookStream,
         private val meterRegistry: MeterRegistry,
-        @Value("#{'\${service.symbols}'.split(',')}") private val symbols: List<String>
+        @Value("#{'\${service.symbols}'.replace(' ', '').split(',')}") private val symbols: List<String>
 ) {
 
     private val valueMap = ConcurrentHashMap<String, AtomicReference<BigDecimal>>()
@@ -25,8 +25,8 @@ class MetricsPublisher(
     init {
         symbols.forEach { symbol ->
             ExchangeName.values().forEach { name->
-                valueMap[name.name + symbol + "_highest_bid"] = AtomicReference(BigDecimal.ZERO)
-                valueMap[name.name + symbol + "_lowest_ask"] = AtomicReference(BigDecimal.ZERO)
+                valueMap[name.name + symbol.trim() + "_highest_bid"] = AtomicReference(BigDecimal.ZERO)
+                valueMap[name.name + symbol.trim() + "_lowest_ask"] = AtomicReference(BigDecimal.ZERO)
             }
         }
     }

@@ -3,7 +3,7 @@ spring:
     name: cross-exchange-bot
 
 service:
-  symbols: USDT-BTC
+  symbols: USDT-BTC, USDT-BCH
   upbit:
     enabled: true
     order-book:
@@ -12,6 +12,7 @@ service:
     enabled: true
     map:
       USDT-BTC: BTCUSDT
+      USDT-BCH: BCHUSDT
     order-book:
       ping-interval: 30
       ws: wss://stream.bybit.com/v5/public/spot
