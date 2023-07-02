@@ -65,7 +65,7 @@ class BybitWebSocket(
         val uuid = UUID.randomUUID().toString()
 
         val topics = symbols.joinToString(",") {
-            "\"orderbook.1." + properties.map[it.trim()] + "\""
+            "\"orderbook.1." + properties.map[it.trim()]!! + "\""
         }
 
         return "{\"req_id\":\"$uuid\",\"op\":\"subscribe\",\"args\":[$topics]}"
