@@ -6,7 +6,7 @@ services:
     volumes:
       - ./build/libs/CrossExchange-0.0.1-SNAPSHOT.jar:/app.jar
     command: ["java", "-jar", "/app.jar"]
-    ports:
+    expose:
       - 8080
     networks:
       - monitoring-network
@@ -17,7 +17,7 @@ services:
       - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-    ports:
+    expose:
       - 9090
     networks:
       - monitoring-network
@@ -34,11 +34,13 @@ services:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-r0ze}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-lnk_92}
     ports:
-      - "3000:3000"
+      - "54322:3000"
     networks:
       - monitoring-network
     depends_on:
       - prometheus
+    logging:
+      driver: none
 
 networks:
   monitoring-network:

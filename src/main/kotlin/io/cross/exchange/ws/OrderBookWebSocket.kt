@@ -4,13 +4,16 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.cross.exchange.service.OrderBookStream
 import io.cross.exchange.ws.model.OrderBookL1
+import io.netty.channel.unix.Errors.NativeIoException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketSession
 import org.springframework.web.reactive.socket.client.WebSocketClient
 import reactor.core.publisher.Mono
 import reactor.core.publisher.Sinks
+import reactor.util.retry.Retry
 import java.net.URI
+import java.time.Duration
 
 abstract class OrderBookWebSocket(
     protected val url: URI,
@@ -19,7 +22,17 @@ abstract class OrderBookWebSocket(
     private val orderBookStream: OrderBookStream
 ) {
 
-    private val wsStream = webSocketClient.execute(url) { this.parse(it) }
+    private val wsStream = webSocketClient
+            .execute(url) { this.parse(it) }
+            .retryWhen(
+                Retry
+                    .backoff(Long.MAX_VALUE, Duration.ofSeconds(1))
+                    .doBeforeRetry {
+                        log.warn("Retry attempt {} to connect to {}. {}",
+                                it.totalRetries() + 1, url, it.failure().message)
+                    }
+                    .filter { it is NativeIoException }
+            )
 
     protected val outbound: Sinks.Many<String> = Sinks.many().unicast().onBackpressureBuffer()
 
