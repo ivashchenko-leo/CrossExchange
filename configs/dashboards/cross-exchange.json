@@ -257,7 +257,7 @@
           "refId": "A"
         }
       ],
-      "title": "BYBIT Buy - UPBIT Sell",
+      "title": "BYBIT Sell - UPBIT Buy",
       "type": "timeseries"
     },
     {
@@ -351,7 +351,7 @@
           "refId": "A"
         }
       ],
-      "title": "UPBIT Buy - BYBIT Sell",
+      "title": "UPBIT Sell - BYBIT Buy",
       "type": "timeseries"
     }
   ],
@@ -370,6 +370,6 @@
   "timezone": "",
   "title": "Cross Exchange",
   "uid": "cc1ec2fe-7209-4b0b-adaa-77ce110afed1",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
