@@ -1,41 +1,47 @@
-package io.cross.exchange.ws;
+package io.cross.exchange.ws
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.cross.exchange.config.BybitProperties
 import io.cross.exchange.enums.ExchangeName
-import io.cross.exchange.service.MetricsPublisher
 import io.cross.exchange.service.OrderBookStream
 import io.cross.exchange.ws.model.OrderBookL1
-import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.socket.client.WebSocketClient;
+import org.springframework.stereotype.Component
+import org.springframework.web.reactive.socket.client.WebSocketClient
 import reactor.core.publisher.Sinks
 import java.math.BigDecimal
-
-import java.net.URI;
+import java.net.URI
 import java.time.Duration
-import java.util.UUID;
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
 @Component
 @ConditionalOnProperty("service.bybit.enabled")
 class BybitWebSocket(
-        @Value("\${service.bybit.order-book.ws}") url: String,
-        @Value("#{'\${service.symbols}'.replace(' ', '').split(',')}") private val symbols: List<String>,
+        @Value("\${service.bybit.order-book.ws}")
+        url: String,
+        @Value("#{'\${service.symbols}'.replace(' ', '').split(',')}")
+        private val symbols: List<String>,
         webSocketClient: WebSocketClient,
         objectMapper: ObjectMapper,
-        orderBookStream: OrderBookStream,
-        private val properties: BybitProperties
+        orderBookStream: OrderBookStream
 ) : OrderBookWebSocket(URI(url), webSocketClient, objectMapper, orderBookStream) {
 
-    private val reverseSymbolsMap = properties.map.entries.associateBy({ it.value }) { it.key }
+    //BTCUSDT => USDT-BTC map
+    private val reverseSymbolsMap = symbols.associateBy {
+        it.split("-").reversed().reduce { acc, s -> acc + s }
+    }
+
+    //USDT-BTC => BTCUSDT map
+    private val symbolsMap = symbols.associateWith {
+        it.split("-").reversed().reduce { acc, s -> acc + s }
+    }
 
     private val priceMap = ConcurrentHashMap<String, BigDecimal>()
 
@@ -65,7 +71,7 @@ class BybitWebSocket(
         val uuid = UUID.randomUUID().toString()
 
         val topics = symbols.joinToString(",") {
-            "\"orderbook.1." + properties.map[it.trim()]!! + "\""
+            "\"orderbook.1." + symbolsMap[it.trim()]!! + "\""
         }
 
         return "{\"req_id\":\"$uuid\",\"op\":\"subscribe\",\"args\":[$topics]}"

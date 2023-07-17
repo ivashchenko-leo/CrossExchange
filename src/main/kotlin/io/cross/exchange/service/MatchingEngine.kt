@@ -14,10 +14,11 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicReference
 
 @Component
-class MetricsPublisher(
+class MatchingEngine(
         private val orderBookStream: OrderBookStream,
         private val meterRegistry: MeterRegistry,
-        @Value("#{'\${service.symbols}'.replace(' ', '').split(',')}") private val symbols: List<String>
+        @Value("#{'\${service.symbols}'.replace(' ', '').split(',')}")
+        private val symbols: List<String>
 ) {
 
     private val valueMap = ConcurrentHashMap<String, AtomicReference<BigDecimal>>()
@@ -55,6 +56,6 @@ class MetricsPublisher(
     }
 
     companion object {
-        private val log: Logger = LoggerFactory.getLogger(MetricsPublisher::class.java)
+        private val log: Logger = LoggerFactory.getLogger(MatchingEngine::class.java)
     }
 }

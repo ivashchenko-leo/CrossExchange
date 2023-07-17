@@ -9,18 +9,14 @@ service:
     order-book:
       ws: wss://api.upbit.com/websocket/v1
   bybit:
-    enabled: true
-    map:
-      USDT-BTC: BTCUSDT
-      USDT-BCH: BCHUSDT
-      USDT-XRP: XRPUSDT
-      USDT-TRX: TRXUSDT
-      USDT-ETH: ETHUSDT
-      USDT-ETC: ETCUSDT
-      USDT-SC: SCUSDT
+    enabled: false
     order-book:
       ping-interval: 30
       ws: wss://stream.bybit.com/v5/public/spot
+  binance:
+    enabled: false
+    order-book:
+      ws: wss://stream.binance.com:443
 
 management:
   metrics:

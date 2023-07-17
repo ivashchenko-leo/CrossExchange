@@ -23,7 +23,7 @@ abstract class OrderBookWebSocket(
 ) {
 
     private val wsStream = webSocketClient
-            .execute(url) { this.parse(it) }
+            .execute(url) { this.sessionHandler(it) }
             .retryWhen(
                 Retry
                     .backoff(Long.MAX_VALUE, Duration.ofSeconds(1))
@@ -36,7 +36,7 @@ abstract class OrderBookWebSocket(
 
     protected val outbound: Sinks.Many<String> = Sinks.many().unicast().onBackpressureBuffer()
 
-    private fun parse(session: WebSocketSession): Mono<Void> {
+    private fun sessionHandler(session: WebSocketSession): Mono<Void> {
         val receiveStream = session.receive()
                 .mapNotNull {
                     val payload = it.payloadAsText
@@ -63,9 +63,10 @@ abstract class OrderBookWebSocket(
     protected abstract fun parse(message: JsonNode): OrderBookL1?
 
     protected fun subscribe() {
-        log.info("Subscribed to {}", url)
         //disposable
         wsStream.subscribe()
+
+        log.info("Subscribed to {}", url)
     }
 
     companion object {
