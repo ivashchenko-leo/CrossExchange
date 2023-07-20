@@ -29,6 +29,335 @@
         "x": 0,
         "y": 0
       },
+      "id": 12,
+      "panels": [],
+      "title": "BINANCE-BYBIT",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 13,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "10.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "expr": "orderBook_diff{exchange=\"BYBIT-BINANCE\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{symbol}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "BYBIT Sell - BINANCE Buy (max)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 14,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "10.0.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "expr": "orderBook_diff{exchange=\"BINANCE-BYBIT\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{symbol}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "BINANCE Sell - BYBIT Buy (max)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "expr": "orderBook_diff{exchange=\"BYBIT-BINANCE\"}",
+          "instant": false,
+          "legendFormat": "{{symbol}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "BYBIT Sell - BINANCE Buy",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "expr": "orderBook_diff{exchange=\"BINANCE-BYBIT\"}",
+          "instant": false,
+          "legendFormat": "{{symbol}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "BINANCE Sell - BYBIT Buy",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
       "id": 1,
       "panels": [],
       "title": "BYBIT-UPBIT",
@@ -66,7 +395,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 18
       },
       "id": 10,
       "options": {
@@ -89,7 +418,7 @@
             "uid": "prometheusuuid1"
           },
           "editorMode": "code",
-          "expr": "(orderBook_highest_bid{exchange=\"BYBIT\"} - on(symbol) orderBook_lowest_ask{exchange=\"UPBIT\"}) / on(symbol) orderBook_lowest_ask{exchange=\"UPBIT\"} * 100",
+          "expr": "orderBook_diff{exchange=\"BYBIT-UPBIT\"}",
           "hide": false,
           "instant": false,
           "legendFormat": "{{symbol}}",
@@ -132,7 +461,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 18
       },
       "id": 11,
       "options": {
@@ -155,7 +484,7 @@
             "uid": "prometheusuuid1"
           },
           "editorMode": "code",
-          "expr": "(orderBook_highest_bid{exchange=\"UPBIT\"} - on(symbol) orderBook_lowest_ask{exchange=\"BYBIT\"}) / on(symbol) orderBook_lowest_ask{exchange=\"BYBIT\"} * 100",
+          "expr": "orderBook_diff{exchange=\"UPBIT-BYBIT\"}",
           "hide": false,
           "instant": false,
           "legendFormat": "{{symbol}}",
@@ -228,7 +557,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 26
       },
       "id": 8,
       "options": {
@@ -322,7 +651,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 9
+        "y": 26
       },
       "id": 9,
       "options": {
@@ -353,6 +682,207 @@
       ],
       "title": "UPBIT Sell - BYBIT Buy",
       "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "id": 17,
+      "panels": [],
+      "title": "Price",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 35
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "orderBook_highest_bid{symbol=\"USDT-BCH\"}",
+          "instant": false,
+          "legendFormat": "{{exchange}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "USDT-BCH",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 35
+      },
+      "id": 19,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "orderBook_highest_bid{symbol=\"USDT-TRX\"}",
+          "instant": false,
+          "legendFormat": "{{exchange}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "USDT-TRX",
+      "type": "timeseries"
     }
   ],
   "refresh": "10s",
@@ -363,13 +893,13 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Cross Exchange",
   "uid": "cc1ec2fe-7209-4b0b-adaa-77ce110afed1",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

@@ -9,12 +9,12 @@ service:
     order-book:
       ws: wss://api.upbit.com/websocket/v1
   bybit:
-    enabled: false
+    enabled: true
     order-book:
       ping-interval: 30
       ws: wss://stream.bybit.com/v5/public/spot
   binance:
-    enabled: false
+    enabled: true
     order-book:
       ws: wss://stream.binance.com:443
 
@@ -23,12 +23,14 @@ management:
     tags:
       application: ${spring.application.name}
   endpoint:
+    loggers:
+      enabled: true
     prometheus:
       enabled: true
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus
+        include: health,info,prometheus,loggers
   prometheus:
     metrics:
       export:
