@@ -9,11 +9,13 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketSession
 import org.springframework.web.reactive.socket.client.WebSocketClient
+import reactor.core.Disposable
 import reactor.core.publisher.Mono
 import reactor.core.publisher.Sinks
 import reactor.util.retry.Retry
 import java.net.URI
 import java.time.Duration
+import kotlin.coroutines.suspendCoroutine
 
 abstract class OrderBookWebSocket(
     protected val url: URI,
@@ -36,6 +38,8 @@ abstract class OrderBookWebSocket(
 
     protected val outbound: Sinks.Many<String> = Sinks.many().unicast().onBackpressureBuffer()
 
+    private var outboundSubscription: Disposable? = null
+
     private fun sessionHandler(session: WebSocketSession): Mono<Void> {
         val receiveStream = session.receive()
                 .mapNotNull {
@@ -47,9 +51,8 @@ abstract class OrderBookWebSocket(
                 .doOnNext { orderBookStream.publish(it!!) }
                 .then()
 
-        session
-                .send(outbound.asFlux().map { session.textMessage(it) })
-                .subscribe()
+        outboundSubscription?.dispose()
+        outboundSubscription = session.send(outbound.asFlux().map { session.textMessage(it) }).subscribe()
 
         val initMessage = initMessage()
         if (initMessage.isNotEmpty())

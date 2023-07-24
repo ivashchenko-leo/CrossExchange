@@ -23,6 +23,8 @@ services:
       - monitoring-network
     depends_on:
       - springboot-app
+    logging:
+      driver: none
 
   grafana:
     image: grafana/grafana:latest

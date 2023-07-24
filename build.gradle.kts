@@ -35,6 +35,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("com.lmax:disruptor:3.4.4")
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.22")
+
     //developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
