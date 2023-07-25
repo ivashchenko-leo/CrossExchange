@@ -3,5 +3,6 @@ package io.cross.exchange.enums
 enum class ExchangeName {
     BYBIT,
     UPBIT,
-    BINANCE
+    BINANCE,
+    BITFINEX
 }

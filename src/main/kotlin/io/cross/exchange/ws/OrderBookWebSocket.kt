@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketSession
 import org.springframework.web.reactive.socket.client.WebSocketClient
 import reactor.core.Disposable
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.Sinks
 import reactor.util.retry.Retry
 import java.net.URI
 import java.time.Duration
-import kotlin.coroutines.suspendCoroutine
 
 abstract class OrderBookWebSocket(
     protected val url: URI,
@@ -49,19 +49,22 @@ abstract class OrderBookWebSocket(
                     this.parse(objectMapper.readTree(payload))
                 }
                 .doOnNext { orderBookStream.publish(it!!) }
+                .doFinally {
+                    log.warn("Receive stream {} has ended {}", url, it.name)
+                }
                 .then()
 
         outboundSubscription?.dispose()
         outboundSubscription = session.send(outbound.asFlux().map { session.textMessage(it) }).subscribe()
 
-        val initMessage = initMessage()
-        if (initMessage.isNotEmpty())
-            return session.send(Mono.just(session.textMessage(initMessage))).then(receiveStream)
+        val initMessages = initMessages()
+        if (initMessages.isNotEmpty())
+            return session.send(Flux.fromIterable(initMessages.map { session.textMessage(it) })).then(receiveStream)
 
         return receiveStream
     }
 
-    protected abstract fun initMessage(): String
+    protected abstract fun initMessages(): List<String>
 
     protected abstract fun parse(message: JsonNode): OrderBookL1?
 

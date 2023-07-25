@@ -67,14 +67,14 @@ class BybitWebSocket(
         outbound.emitNext(message, Sinks.EmitFailureHandler.busyLooping(Duration.ofSeconds(1)))
     }
 
-    override fun initMessage(): String {
+    override fun initMessages(): List<String> {
         val uuid = UUID.randomUUID().toString()
 
         val topics = symbols.joinToString(",") {
             "\"orderbook.1." + symbolsMap[it.trim()]!! + "\""
         }
 
-        return "{\"req_id\":\"$uuid\",\"op\":\"subscribe\",\"args\":[$topics]}"
+        return listOf("{\"req_id\":\"$uuid\",\"op\":\"subscribe\",\"args\":[$topics]}")
     }
 
     override fun parse(message: JsonNode): OrderBookL1? {

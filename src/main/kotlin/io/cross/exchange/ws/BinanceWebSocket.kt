@@ -38,17 +38,12 @@ class BinanceWebSocket(
         it.split("-").reversed().reduce { acc, s -> acc + s }
     }
 
-    //USDT-BTC => BTCUSDT map
-    private val symbolsMap = symbols.associateWith {
-        it.split("-").reversed().reduce { acc, s -> acc + s }
-    }
-
     @PostConstruct
     fun init() {
         subscribe()
     }
 
-    override fun initMessage(): String = ""
+    override fun initMessages(): List<String> = emptyList()
 
     override fun parse(message: JsonNode): OrderBookL1? {
         return if (message.has("data")) {

@@ -32,13 +32,13 @@ class UpbitWebSocket(
         subscribe();
     }
 
-    override fun initMessage(): String {
+    override fun initMessages(): List<String> {
         val uuid = UUID.randomUUID().toString()
 
         val codes = symbols.joinToString(",") { "\"" + it.trim() + "\"" }
 
-        return "[{\"ticket\":\"$uuid\"},{\"type\":\"orderbook\",\"codes\":[$codes], " +
-                "\"isOnlyRealtime\":true},{\"format\":\"SIMPLE\"}]"
+        return listOf("[{\"ticket\":\"$uuid\"},{\"type\":\"orderbook\",\"codes\":[$codes], " +
+                "\"isOnlyRealtime\":true},{\"format\":\"SIMPLE\"}]")
     }
 
     override fun parse(message: JsonNode): OrderBookL1 {
