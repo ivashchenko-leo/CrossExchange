@@ -9,7 +9,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketSession
 import org.springframework.web.reactive.socket.client.WebSocketClient
-import reactor.core.Disposable
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.Sinks
@@ -23,22 +22,19 @@ abstract class OrderBookWebSocket(
     protected val objectMapper: ObjectMapper,
     private val orderBookStream: OrderBookStream
 ) {
+    private val retry = Retry
+            .backoff(Long.MAX_VALUE, Duration.ofSeconds(1))
+            .doBeforeRetry {
+                log.warn("Retry attempt {} to connect to {}. {}",
+                        it.totalRetries() + 1, url, it.failure().message)
+            }
+            .filter { it is NativeIoException }
 
     private val wsStream = webSocketClient
             .execute(url) { this.sessionHandler(it) }
-            .retryWhen(
-                Retry
-                    .backoff(Long.MAX_VALUE, Duration.ofSeconds(1))
-                    .doBeforeRetry {
-                        log.warn("Retry attempt {} to connect to {}. {}",
-                                it.totalRetries() + 1, url, it.failure().message)
-                    }
-                    .filter { it is NativeIoException }
-            )
+            .retryWhen(retry)
 
-    protected val outbound: Sinks.Many<String> = Sinks.many().unicast().onBackpressureBuffer()
-
-    private var outboundSubscription: Disposable? = null
+    protected var outbound: Sinks.Many<String> = Sinks.many().unicast().onBackpressureBuffer()
 
     private fun sessionHandler(session: WebSocketSession): Mono<Void> {
         val receiveStream = session.receive()
@@ -49,13 +45,15 @@ abstract class OrderBookWebSocket(
                     this.parse(objectMapper.readTree(payload))
                 }
                 .doOnNext { orderBookStream.publish(it!!) }
-                .doFinally {
-                    log.warn("Receive stream {} has ended {}", url, it.name)
+                .doOnComplete {
+                    log.warn("Receive stream {} has ended ON_COMPLETE", url)
+
+                    subscribe()
                 }
                 .then()
 
-        outboundSubscription?.dispose()
-        outboundSubscription = session.send(outbound.asFlux().map { session.textMessage(it) }).subscribe()
+        outbound = Sinks.many().unicast().onBackpressureBuffer()
+        session.send(outbound.asFlux().map { session.textMessage(it) }).subscribe()
 
         val initMessages = initMessages()
         if (initMessages.isNotEmpty())

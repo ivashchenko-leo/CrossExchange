@@ -14,7 +14,7 @@ service:
       ping-interval: 30
       ws: wss://stream.bybit.com/v5/public/spot
   binance:
-    enabled: false
+    enabled: true
     order-book:
       ws: wss://stream.binance.com:443
   bitfinex:
