@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.socket.client.WebSocketClient
 import java.math.BigDecimal
 import java.net.URI
+import java.time.Duration
 import java.util.*
 
 @Component
@@ -23,6 +24,8 @@ class BinanceWebSocket(
         url: String,
         @Value("#{'\${service.symbols}'.replace(' ', '').split(',')}")
         private val symbols: List<String>,
+        @Value("\${service.binance.order-book.timeout}")
+        private val timeout: Long,
         webSocketClient: WebSocketClient,
         objectMapper: ObjectMapper,
         orderBookStream: OrderBookStream
@@ -44,6 +47,10 @@ class BinanceWebSocket(
     }
 
     override fun initMessages(): List<String> = emptyList()
+
+    override fun receiveTimeout(): Duration? {
+        return Duration.ofSeconds(timeout)
+    }
 
     override fun parse(message: JsonNode): OrderBookL1? {
         return if (message.has("data")) {

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.cross.exchange.service.OrderBookStream
 import io.cross.exchange.ws.model.OrderBookL1
-import io.netty.channel.unix.Errors.NativeIoException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketSession
@@ -28,7 +27,6 @@ abstract class OrderBookWebSocket(
                 log.warn("Retry attempt {} to connect to {}. {}",
                         it.totalRetries() + 1, url, it.failure().message)
             }
-            .filter { it is NativeIoException }
 
     private val wsStream = webSocketClient
             .execute(url) { this.sessionHandler(it) }
@@ -37,7 +35,9 @@ abstract class OrderBookWebSocket(
     protected var outbound: Sinks.Many<String> = Sinks.many().unicast().onBackpressureBuffer()
 
     private fun sessionHandler(session: WebSocketSession): Mono<Void> {
-        val receiveStream = session.receive()
+        val receiveStream = receiveTimeout()?.let { session.receive().timeout(it) } ?: session.receive()
+
+        val receiveMono = receiveStream
                 .mapNotNull {
                     val payload = it.payloadAsText
 
@@ -57,9 +57,13 @@ abstract class OrderBookWebSocket(
 
         val initMessages = initMessages()
         if (initMessages.isNotEmpty())
-            return session.send(Flux.fromIterable(initMessages.map { session.textMessage(it) })).then(receiveStream)
+            return session.send(Flux.fromIterable(initMessages.map { session.textMessage(it) })).then(receiveMono)
 
-        return receiveStream
+        return receiveMono
+    }
+
+    protected open fun receiveTimeout(): Duration? {
+        return null
     }
 
     protected abstract fun initMessages(): List<String>

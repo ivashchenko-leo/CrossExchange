@@ -16,6 +16,7 @@ service:
   binance:
     enabled: true
     order-book:
+      timeout: 1
       ws: wss://stream.binance.com:443
   bitfinex:
     enabled: true
