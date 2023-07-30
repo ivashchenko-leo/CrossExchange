@@ -22,7 +22,7 @@ abstract class OrderBookWebSocket(
     private val orderBookStream: OrderBookStream
 ) {
     private val retry = Retry
-            .backoff(Long.MAX_VALUE, Duration.ofSeconds(1))
+            .indefinitely()
             .doBeforeRetry {
                 log.warn("Retry attempt {} to connect to {}. {}",
                         it.totalRetries() + 1, url, it.failure().message)
