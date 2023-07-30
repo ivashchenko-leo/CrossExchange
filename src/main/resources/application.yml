@@ -16,11 +16,12 @@ service:
   binance:
     enabled: true
     order-book:
-      timeout: 3
+      timeout: 5
       ws: wss://stream.binance.com:443
   bitfinex:
     enabled: true
     order-book:
+      timeout: 5
       ws: wss://api-pub.bitfinex.com/ws/2
 
 management:

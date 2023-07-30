@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.socket.client.WebSocketClient
 import java.math.BigDecimal
 import java.net.URI
+import java.time.Duration
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -24,6 +25,8 @@ class BitfinexWebSocket(
         url: String,
         @Value("#{'\${service.symbols}'.replace(' ', '').split(',')}")
         private val symbols: List<String>,
+        @Value("\${service.bitfinex.order-book.timeout}")
+        private val timeout: Long,
         webSocketClient: WebSocketClient,
         objectMapper: ObjectMapper,
         orderBookStream: OrderBookStream
@@ -48,6 +51,10 @@ class BitfinexWebSocket(
     @PostConstruct
     fun init() {
         subscribe()
+    }
+
+    override fun receiveTimeout(): Duration? {
+        return Duration.ofSeconds(timeout)
     }
 
     override fun initMessages(): List<String> = reverseSymbolsMap.keys.map {
