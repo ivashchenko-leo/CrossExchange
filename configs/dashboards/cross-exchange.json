@@ -29,7 +29,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 20,
+      "id": 28,
       "panels": [
         {
           "datasource": {
@@ -60,6 +60,336 @@
             "w": 12,
             "x": 0,
             "y": 1
+          },
+          "id": 29,
+          "options": {
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "max"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": false
+          },
+          "pluginVersion": "10.0.2",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheusuuid1"
+              },
+              "editorMode": "code",
+              "expr": "orderBook_diff{exchange=\"BYBIT-COINEX\"}",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "{{symbol}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "BYBIT Sell - COINEX Buy (max)",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 1
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 12,
+            "y": 1
+          },
+          "id": 30,
+          "options": {
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "max"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": false
+          },
+          "pluginVersion": "10.0.2",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheusuuid1"
+              },
+              "editorMode": "code",
+              "expr": "orderBook_diff{exchange=\"COINEX-BYBIT\"}",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "{{symbol}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "COINEX Sell - BYBIT Buy (max)",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 6
+          },
+          "id": 31,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheusuuid1"
+              },
+              "editorMode": "code",
+              "expr": "orderBook_diff{exchange=\"BYBIT-COINEX\"}",
+              "instant": false,
+              "legendFormat": "{{symbol}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "BYBIT Sell - COINEX Buy",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 6
+          },
+          "id": 32,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheusuuid1"
+              },
+              "editorMode": "code",
+              "expr": "orderBook_diff{exchange=\"BITFINEX-COINEX\"}",
+              "instant": false,
+              "legendFormat": "{{symbol}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "COINEX Sell - BYBIT Buy",
+          "type": "timeseries"
+        }
+      ],
+      "title": "COINEX-BYBIT",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 20,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 12,
+            "x": 0,
+            "y": 2
           },
           "id": 21,
           "options": {
@@ -125,7 +455,7 @@
             "h": 5,
             "w": 12,
             "x": 12,
-            "y": 1
+            "y": 2
           },
           "id": 22,
           "options": {
@@ -221,7 +551,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 6
+            "y": 7
           },
           "id": 23,
           "options": {
@@ -315,7 +645,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 6
+            "y": 7
           },
           "id": 24,
           "options": {
@@ -357,7 +687,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 2
       },
       "id": 12,
       "panels": [
@@ -389,7 +719,7 @@
             "h": 5,
             "w": 12,
             "x": 0,
-            "y": 2
+            "y": 3
           },
           "id": 13,
           "options": {
@@ -455,7 +785,7 @@
             "h": 5,
             "w": 12,
             "x": 12,
-            "y": 2
+            "y": 3
           },
           "id": 14,
           "options": {
@@ -551,7 +881,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 7
+            "y": 8
           },
           "id": 15,
           "options": {
@@ -645,7 +975,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 7
+            "y": 8
           },
           "id": 16,
           "options": {
@@ -687,7 +1017,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 2
+        "y": 3
       },
       "id": 1,
       "panels": [
@@ -723,7 +1053,7 @@
             "h": 5,
             "w": 12,
             "x": 0,
-            "y": 3
+            "y": 4
           },
           "id": 10,
           "options": {
@@ -789,7 +1119,7 @@
             "h": 5,
             "w": 12,
             "x": 12,
-            "y": 3
+            "y": 4
           },
           "id": 11,
           "options": {
@@ -885,7 +1215,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 8
+            "y": 9
           },
           "id": 8,
           "options": {
@@ -979,7 +1309,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 8
+            "y": 9
           },
           "id": 9,
           "options": {
@@ -1021,7 +1351,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 3
+        "y": 4
       },
       "id": 17,
       "panels": [],
@@ -1089,7 +1419,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 4
+        "y": 5
       },
       "id": 18,
       "options": {
@@ -1183,7 +1513,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 4
+        "y": 5
       },
       "id": 19,
       "options": {
@@ -1214,6 +1544,288 @@
         }
       ],
       "title": "USDT-TRX",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 25,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "orderBook_highest_bid{symbol=\"USDT-XRP\"}",
+          "instant": false,
+          "legendFormat": "{{exchange}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "USDT-XRP",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 26,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "orderBook_highest_bid{symbol=\"USDT-ETC\"}",
+          "instant": false,
+          "legendFormat": "{{exchange}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "USDT-ETC",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheusuuid1"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheusuuid1"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "orderBook_highest_bid{symbol=\"USDT-ETH\"}",
+          "instant": false,
+          "legendFormat": "{{exchange}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "USDT-ETH",
       "type": "timeseries"
     }
   ],
