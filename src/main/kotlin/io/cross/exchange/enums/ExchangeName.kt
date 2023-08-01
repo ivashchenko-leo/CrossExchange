@@ -4,5 +4,6 @@ enum class ExchangeName {
     BYBIT,
     UPBIT,
     BINANCE,
-    BITFINEX
+    BITFINEX,
+    COINEX
 }

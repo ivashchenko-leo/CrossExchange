@@ -23,6 +23,10 @@ service:
     order-book:
       timeout: 5
       ws: wss://api-pub.bitfinex.com/ws/2
+  coinex:
+    enabled: true
+    order-book:
+      ws: wss://socket.coinex.com/
 
 management:
   metrics:

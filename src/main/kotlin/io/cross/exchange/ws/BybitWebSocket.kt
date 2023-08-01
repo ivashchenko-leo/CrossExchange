@@ -38,11 +38,6 @@ class BybitWebSocket(
         it.split("-").reversed().reduce { acc, s -> acc + s }
     }
 
-    //USDT-BTC => BTCUSDT map
-    private val symbolsMap = symbols.associateWith {
-        it.split("-").reversed().reduce { acc, s -> acc + s }
-    }
-
     private val priceMap = ConcurrentHashMap<String, BigDecimal>()
 
     init {
@@ -70,8 +65,8 @@ class BybitWebSocket(
     override fun initMessages(): List<String> {
         val uuid = UUID.randomUUID().toString()
 
-        val topics = symbols.joinToString(",") {
-            "\"orderbook.1." + symbolsMap[it.trim()]!! + "\""
+        val topics = reverseSymbolsMap.keys.joinToString(",") {
+            "\"orderbook.1.$it\""
         }
 
         return listOf("{\"req_id\":\"$uuid\",\"op\":\"subscribe\",\"args\":[$topics]}")
@@ -84,9 +79,9 @@ class BybitWebSocket(
             val asks = message["data"]["a"]
 
             if (!bids.isEmpty)
-                priceMap[originalSymbol + "_highest_bid"] = BigDecimal(bids.first().first().asText())
+                priceMap[originalSymbol + "_highest_bid"] = BigDecimal(bids[0][0].asText())
             if (!asks.isEmpty)
-                priceMap[originalSymbol + "_lowest_ask"] = BigDecimal(asks.first().first().asText())
+                priceMap[originalSymbol + "_lowest_ask"] = BigDecimal(asks[0][0].asText())
 
             OrderBookL1(
                     reverseSymbolsMap[originalSymbol]!!,
